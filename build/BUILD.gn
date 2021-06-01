@@ -1,0 +1,72 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+ohos_prebuilt_etc("init.Hi3516DV300.rc") {
+  source = "rootfs/init.Hi3516DV300.rc"
+  module_install_dir = "etc/init"
+  install_images = [ "vendor" ]
+  part_name = "hisilicon_products"
+}
+
+ohos_prebuilt_etc("init.Hi3516DV300.usb.rc") {
+  source = "rootfs/init.Hi3516DV300.usb.rc"
+  module_install_dir = "etc/init"
+  install_images = [ "vendor" ]
+  part_name = "hisilicon_products"
+}
+
+ohos_prebuilt_etc("ueventd.rc") {
+  source = "rootfs/ueventd.rc"
+  install_images = [ "vendor" ]
+  module_install_dir = "./"
+  part_name = "hisilicon_products"
+}
+
+ohos_prebuilt_etc("fstab.Hi3516DV300") {
+  source = "vendor/etc/fstab.Hi3516DV300"
+  module_install_dir = "etc"
+  install_images = [ "vendor" ]
+  part_name = "hisilicon_products"
+}
+
+ohos_prebuilt_etc("vb_config_user.ini") {
+  source = "vendor/etc/vb_config_user.ini"
+  module_install_dir = "./"
+  install_images = [ "vendor" ]
+  part_name = "hisilicon_products"
+}
+
+ohos_copy("u-boot-hi3516dv300_emmc.bin") {
+  sources = [ "//device/hisilicon/hi3516dv300/sdk_linux/open_source/bin/u-boot-hi3516dv300_emmc.bin" ]
+  outputs =
+      [ "$root_build_dir/packages/phone/images/u-boot-hi3516dv300_emmc.bin" ]
+}
+
+ohos_copy("Hi3516DV300-emmc.xml") {
+  sources = [ "Hi3516DV300-emmc.xml" ]
+  outputs = [ "$root_build_dir/packages/phone/images/Hi3516DV300-emmc.xml" ]
+}
+
+group("rc_files") {
+  deps = [
+    ":Hi3516DV300-emmc.xml",
+    ":u-boot-hi3516dv300_emmc.bin",
+    ":fstab.Hi3516DV300",
+    ":init.Hi3516DV300.rc",
+    ":init.Hi3516DV300.usb.rc",
+    ":ueventd.rc",
+    ":vb_config_user.ini",
+  ]
+}

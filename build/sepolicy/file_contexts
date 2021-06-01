@@ -1,0 +1,2 @@
+
+/hos(/.*)?                 u:object_r:hos_file:s0
