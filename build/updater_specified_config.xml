@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package>
+    <head name="Component header information">
+        <info fileVersion="01" prdID="123456" softVersion="Hi3516DV300-eng 10 QP1A.190711.020" date="2021-03-11" time="12:30">head info</info>
+    </head>
+    <group name = "Component information">
+	<component compAddr="vendor" compId="12" resType="05" compType="0" compVer="0o00">.\IMAGES\vendor.img</component>
+	<component compAddr="system" compId="18" resType="05" compType="0" compVer="0o00">.\IMAGES\system.img</component>
+    </group>
+</package>

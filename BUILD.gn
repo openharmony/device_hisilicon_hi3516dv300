@@ -1,0 +1,14 @@
+# Copyright (C) 2021 Hisilicon (Shanghai) Technologies Co., Ltd. All rights reserved.
+
+import("//build/ohos.gni")
+
+print("hi3516dv300_group in")
+group("hi3516dv300_group") {
+  deps = [
+    "sdk_linux/mpp:sdk_linux_mpp_group",
+    "kernel:kernel",
+    "kernel:all_modules",
+    "build:rc_files",
+    #"sdk_linux/osdrv:sdk_linux_osdrv_group"
+  ]
+}
