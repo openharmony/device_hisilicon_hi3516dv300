@@ -312611,9 +312611,9 @@ index 000000000000..6af1e19dc805
 +		return;
 +	}
 +	val = readl(pwr_ctrl);
-+	val = val | GPIO_AT_PMC_ENABLE_BIT;
++	val = val | GPIO_AT_PWC_ENABLE_BIT;
 +	writel(val, pwr_ctrl);
-+	msleep(REG_SLEEM_TIME_MS);
++	msleep(REG_SLEEP_TIME_MS);
 +	iounmap(pwr_ctrl);
 +#endif
 +}
