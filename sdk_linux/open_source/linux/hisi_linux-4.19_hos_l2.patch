@@ -312601,13 +312601,13 @@ index 000000000000..6af1e19dc805
 +static void himci_sdio_setup(void)
 +{
 +#if defined(CONFIG_ARCH_HI3516DV300)
-+	void __iomen *pwr_ctrl;
++	void __iomem *pwr_ctrl;
 +	/* enable GPIO pin multiplexing in PMC module */
 +	unsigned int val;
 +
 +	pwr_ctrl = ioremap(PWR_CTRL0_REG, 0x4);
 +	if (!pwr_ctrl) {
-+		printf("%s ioremap fail\n", __func__);
++		printk("%s ioremap fail\n", __func__);
 +		return;
 +	}
 +	val = readl(pwr_ctrl);
