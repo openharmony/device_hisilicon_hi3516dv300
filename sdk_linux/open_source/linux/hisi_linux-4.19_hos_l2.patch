@@ -310431,7 +310431,7 @@ new file mode 100644
 index 000000000000..6af1e19dc805
 --- /dev/null
 +++ b/drivers/mmc/host/himci/himci.c
-@@ -0,0 +1,2507 @@
+@@ -0,0 +1,2561 @@
 +/*
 + * Copyright (c) 2016-2017 HiSilicon Technologies Co., Ltd.
 + *
@@ -310534,6 +310534,12 @@ index 000000000000..6af1e19dc805
 +    defined(CONFIG_ARCH_HI3556V200)  || defined(CONFIG_ARCH_HI3559V200)  || \
 +    defined(CONFIG_ARCH_HI3562V100)  || defined(CONFIG_ARCH_HI3566V100)
 +void __iomem *crg_ctrl, *misc_ctrl_1;
++#endif
++
++#if defined(CONFIG_ARCH_HI3516DV300)
++#define PWR_CTRL0_REG 0x12090000
++#define GPIO_AT_PWC_ENABLE_BIT 0x80
++#define REG_SLEEP_TIME_MS 0x30
 +#endif
 +
 +static unsigned int detect_time = HI_MCI_DETECT_TIMEOUT;
@@ -312592,6 +312598,26 @@ index 000000000000..6af1e19dc805
 +	return 0;
 +}
 +
++static void himci_sdio_setup(void)
++{
++#if defined(CONFIG_ARCH_HI3516DV300)
++	void __iomen *pwr_ctrl;
++	/* enable GPIO pin multiplexing in PMC module */
++	unsigned int val;
++
++	pwr_ctrl = ioremap(PWR_CTRL0_REG, 0x4);
++	if (!pwr_ctrl) {
++		printf("%s ioremap fail\n", __func__);
++		return;
++	}
++	val = readl(pwr_ctrl);
++	val = val | GPIO_AT_PMC_ENABLE_BIT;
++	writel(val, pwr_ctrl);
++	msleep(REG_SLEEM_TIME_MS);
++	iounmap(pwr_ctrl);
++#endif
++}
++
 +static int himci_probe(struct platform_device *pdev)
 +{
 +	struct mmc_host *mmc = NULL;
@@ -312600,10 +312626,17 @@ index 000000000000..6af1e19dc805
 +	int ret = 0, irq;
 +	struct device_node *np = pdev->dev.of_node;
 +	unsigned int regval;
++	static bool sdio_setup = false;
 +
 +	himci_trace(2, "begin");
 +	pr_info("mmc host probe\n");
 +	himci_assert(pdev);
++
++	if (sdio_setup == false) {
++		pr_info("sdio_setup entry!\n");
++		himci_sdio_setup();
++		sdio_setup = true;
++	}
 +
 +	mmc = mmc_alloc_host(sizeof(struct himci_host), &pdev->dev);
 +	if (!mmc) {
@@ -312665,8 +312698,13 @@ index 000000000000..6af1e19dc805
 +	mmc->ocr_avail = MMC_VDD_32_33 | MMC_VDD_33_34;
 +
 +	host = mmc_priv(mmc);
-+	mci_host[slot_index++] = host;
 +	pdev->id = host->devid;
++	if (host->devid >= HIMCI_SLOT_NUM) {
++		himci_error("devid is invalid!\n");
++		ret = -EINVAL;
++		goto out;
++	}
++	mci_host[host->devid] = host;
 +	host->pdev = pdev;
 +	host->mmc = mmc;
 +#ifdef CONFIG_ARCH_HI3518EV20X
@@ -312871,6 +312909,22 @@ index 000000000000..6af1e19dc805
 +	add_timer(&host->timer);
 +}
 +EXPORT_SYMBOL(hisi_sdio_rescan);
++
++struct mmc_host *himci_get_mmc_host(int slot)
++{
++	struct himci_host *host = NULL;
++
++	if (slot >= HIMCI_SLOT_NUM || slot < 0) {
++		return NULL;
++	}
++
++	host = mci_host[slot];
++	if (host == NULL) {
++		return NULL;
++	}
++	return host->mmc;
++}
++EXPORT_SYMBOL(himci_get_mmc_host);
 +
 +static const struct of_device_id
 +	himci_match[] __maybe_unused = {
@@ -314374,7 +314428,7 @@ index 000000000000..a1bfa5fb1d15
 +#define MAX_SPEED_MODE 5
 +#define MMC_STATE_BLOCKADDR (1<<2) /* card uses block-addressing copy from core/card.h */
 +#define MMC_CARD_SDXC (1<<3) /* card is SDXC copy from core/card.h */
-+#define HIMCI_SLOT_NUM 2
++#define HIMCI_SLOT_NUM 3
 +
 +extern struct himci_host *mci_host[HIMCI_SLOT_NUM];
 +int mci_proc_init(void);
