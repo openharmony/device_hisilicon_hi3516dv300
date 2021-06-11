@@ -43,6 +43,7 @@ action("kernel") {
     rebase_path(kernel_build_script_dir, root_build_dir),
     rebase_path("$root_out_dir/../KERNEL_OBJ"),
     rebase_path("$root_build_dir/packages/phone/images"),
+    device_type,
   ]
 }
 
