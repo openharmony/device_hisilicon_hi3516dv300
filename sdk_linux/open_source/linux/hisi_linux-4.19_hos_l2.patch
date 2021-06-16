@@ -361917,3 +361917,40 @@ index d1312f14d78f..e0b3fcef9efd 100644
  	if (count == 0)
  		count = 1;
  
+@@ -1729,6 +1732,27 @@ static inline void hidinput_configure_usages(struct hid_input *hidinput,
+ 						 report->field[i]->usage + j);
+ }
+ 
++static void transferinfo(struct input_dev *dev)
++{
++	HidInfo info;
++	info.devName = dev->name;
++	memcpy(info.devProp, dev->propbit, sizeof(unsigned long) * BITS_TO_LONGS(INPUT_PROP_CNT));
++	memcpy(info.eventType, dev->evbit, sizeof(unsigned long) * BITS_TO_LONGS(EV_CNT));
++	memcpy(info.keyCode, dev->keybit, sizeof(unsigned long) * BITS_TO_LONGS(KEY_CNT));
++	memcpy(info.relCode, dev->relbit, sizeof(unsigned long) * BITS_TO_LONGS(REL_CNT));
++	memcpy(info.absCode, dev->absbit, sizeof(unsigned long) * BITS_TO_LONGS(ABS_CNT));
++	memcpy(info.miscCode, dev->mscbit, sizeof(unsigned long) * BITS_TO_LONGS(MSC_CNT));
++	memcpy(info.ledCode, dev->ledbit, sizeof(unsigned long) * BITS_TO_LONGS(LED_CNT));
++	memcpy(info.soundCode, dev->sndbit, sizeof(unsigned long) * BITS_TO_LONGS(SND_CNT));
++	memcpy(info.forceCode, dev->ffbit, sizeof(unsigned long) * BITS_TO_LONGS(FF_CNT));
++	memcpy(info.switchCode, dev->swbit, sizeof(unsigned long) * BITS_TO_LONGS(SW_CNT));
++	info.bustype = dev->id.bustype;
++	info.vendor = dev->id.vendor;
++	info.product = dev->id.product;
++	info.version = dev->id.version;
++	GetInfoFromHid(info);
++}
++
+ /*
+  * Register the input device; print a message.
+  * Configure the input layer interface
+@@ -1811,7 +1835,7 @@ int hidinput_connect(struct hid_device *hid, unsigned int force)
+ 			hidinput_cleanup_hidinput(hid, hidinput);
+ 			continue;
+ 		}
+-
++		transferinfo(hidinput->input);
+ 		if (input_register_device(hidinput->input))
+ 			goto out_unwind;
+ 		hidinput->registered = true;
