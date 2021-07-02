@@ -2,7 +2,6 @@
 
 import("//build/ohos.gni")
 
-SDK_LIB_DIR = "lib"
 GPL_SDK_LIB_DIR = "//device/hisilicon/hispark_taurus/sdk_linux/soc/lib"
 
 group("sdk_linux_mpp_group") {
@@ -17,7 +16,6 @@ group("sdk_linux_mpp_group") {
     ":lib_hidrc",
     ":lib_hiir_auto",
     ":lib_hildci",
-    ":lib_pq_ai",
     ":libaaccomm",
     ":libaacdec",
     ":libaacenc",
@@ -57,7 +55,6 @@ group("sdk_linux_mpp_group") {
     ":libhi_osal",
     ":libhi_sensor_i2c",
     ":libhifisheyecalibrate",
-    ":libhimcfcal",
     ":libhive_AEC",
     ":libhive_AGC",
     ":libhive_ANR",
@@ -119,18 +116,8 @@ ohos_prebuilt_shared_library("libive") {
   subsystem_name = "hisilicon_products"
 }
 
-ohos_prebuilt_shared_library("libhimcfcal") {
-  source = "$SDK_LIB_DIR/libhimcfcal.so"
-  subsystem_name = "hisilicon_products"
-}
-
 ohos_prebuilt_shared_library("libaacenc") {
   source = "$GPL_SDK_LIB_DIR/libaacenc.so"
-  subsystem_name = "hisilicon_products"
-}
-
-ohos_prebuilt_shared_library("lib_pq_ai") {
-  source = "$SDK_LIB_DIR/lib_pq_ai.so"
   subsystem_name = "hisilicon_products"
 }
 
