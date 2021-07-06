@@ -12,7 +12,6 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//build/config/clang/clang.gni")
 
 kernel_build_script_dir = "//kernel/linux/patches"
 kernel_source_dir = "//kernel/linux-4.19"
@@ -46,12 +45,6 @@ action("kernel") {
     rebase_path("$root_build_dir/packages/phone/images"),
     device_type,
   ]
-  if(use_musl) {
-    args += [
-      "$use_musl",
-      rebase_path("$clang_base_path"),
-    ]
-  }
 }
 
 action("modules") {
