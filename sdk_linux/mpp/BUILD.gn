@@ -74,19 +74,15 @@ group("sdk_linux_mpp_group") {
     ":libive",
     ":libmd",
     ":libmpi",
+    ":libmpp_vbs",
     ":libnnie",
     ":libsdk",
     ":libsecurec",
     ":libsns_imx335",
     ":libtde",
     ":libupvqe",
+    ":libvb_server",
   ]
-  if(!use_musl) {
-    deps += [
-      ":libmpp_vbs",
-      ":libvb_server",
-    ]
-  }
 }
 
 ohos_prebuilt_shared_library("libhive_HPF") {
@@ -471,16 +467,14 @@ ohos_prebuilt_shared_library("libsdk") {
   part_name = "hisilicon_products"
 }
 
-if(!use_musl) {
-  ohos_prebuilt_shared_library("libmpp_vbs") {
-    source = "$GPL_SDK_LIB_DIR/libmpp_vbs.so"
-    subsystem_name = "hisilicon_products"
-    part_name = "hisilicon_products"
-  }
+ohos_prebuilt_shared_library("libmpp_vbs") {
+  source = "$GPL_SDK_LIB_DIR/libmpp_vbs.so"
+  subsystem_name = "hisilicon_products"
+  part_name = "hisilicon_products"
+}
 
-  ohos_prebuilt_shared_library("libvb_server") {
-    source = "$GPL_SDK_LIB_DIR/libvb_server.so"
-    subsystem_name = "hisilicon_products"
-    part_name = "hisilicon_products"
-  }
+ohos_prebuilt_shared_library("libvb_server") {
+  source = "$GPL_SDK_LIB_DIR/libvb_server.so"
+  subsystem_name = "hisilicon_products"
+  part_name = "hisilicon_products"
 }
