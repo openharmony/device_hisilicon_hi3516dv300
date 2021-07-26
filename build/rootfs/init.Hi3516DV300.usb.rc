@@ -30,6 +30,6 @@ on property:sys.usb.config=none && property:sys.usb.configfs=1
 on property:init.svc.hdcd=stopped
     setprop sys.usb.ffs.ready 0
 
-on property:sys.usb.config=hdc && property:sys.usb.configfs=1
+on property:sys.usb.config=hdc,adb && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idProduct 0x5000
     write /config/usb_gadget/g1/os_desc/use 1
