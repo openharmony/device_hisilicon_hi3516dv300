@@ -21,7 +21,7 @@ set -e
 
 
 pushd ${1}
-./kernel_module_build.sh ${2} ${4} ${5}
+./kernel_module_build.sh ${2} ${4} ${5} ${6}
 mkdir -p ${3}
 cp ${2}/kernel/src_tmp/linux-4.19/arch/arm/boot/uImage ${3}/uImage
 popd
