@@ -56,13 +56,12 @@ Note:If the text contains special characters, please escape them according to th
 -->
 <configuration>
     <oatconfig>
-		<licensefile>build/LICENSE|sdk_linux/open_source/linux/LICENSE|sdk_linux/open_source/bin/LICENSE|sdk_linux/mpp/lib/LICENSE</licensefile>
+		<licensefile>build/LICENSE|sdk_linux/open_source/bin/LICENSE</licensefile>
         <policylist>
             <policy name="projectPolicy" desc="">
 				<policyitem type="copyright" name="HiSilicon (Shanghai) Technologies CO., LIMITED." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="小海思开发代码"/>
 				<policyitem type="license" name="EndUserLicenseAgreement" path="sdk_linux/mpp/lib/LICENSE" desc="二进制文件遵循的licence"/>
 				<policyitem type="license" name="EndUserLicenseAgreement" path="sdk_linux/open_source/bin/LICENSE" desc="二进制文件遵循的licence"/>
-				<policyitem type="license" name="GPLStyleLicense" path="sdk_linux/open_source/linux/LICENSE" desc="linux kernel patch遵循的licence"/>
 				<policyitem type="license" name="ThirdPartyNotice" path="sdk_linux/open_source/bin/NOTICE" desc="三方软件notice"/>
             </policy>
         </policylist>
@@ -72,6 +71,7 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filename" name="init.cfg" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filename" name="Hi3516DV300-emmc.xml" desc="tool烧写分区，不能加其他注释"/>
 				<filteritem type="filename" name="updater_specified_config.xml" desc="配置文件，不能加其他注释"/>
+				<filteritem type="filename" name="NOTICE" desc="ThirdPartyNotice"/>
 				<filteritem type="filepath" name="build/updater_config/.*" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="build/vendor/etc/.*" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="updater/.*" desc="配置文件，不能加其他注释"/>
@@ -80,10 +80,12 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filename" name="README.OpenSource"/>
 				<filteritem type="filename" name="README"/>
 				<filteritem type="filename" name="README"/>
+				<filteritem type="filename" name="BUILD.gn" desc="Compilation scripts do not declare license"/>
 			</filefilter>
 			<filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies" >
 				<filteritem type="filename" name="README.OpenSource"/>
 				<filteritem type="filename" name="README"/>
+				<filteritem type="filename" name="BUILD.gn" desc="HiSilicon copyright"/>
 			</filefilter>
 			<filefilter name="licenseFileNamePolicyFilter" desc="Filters for LICENSE file policies" >
 			</filefilter>
@@ -93,8 +95,6 @@ Note:If the text contains special characters, please escape them according to th
 			</filefilter>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies" >
 				<filteritem type="filename" name="rsa_private_key2048.pem" desc="key值不可用添加其他信息"/>
-				<filteritem type="filename" name="lib_pq_ai.so" desc="纯自研，遵从EULA协议"/>
-				<filteritem type="filename" name="libhimcfcal.so" desc="纯自研，遵从EULA协议"/>
 				<filteritem type="filename" name="u-boot-hi3516dv300_emmc.bin" desc="u-boot源码生成，已放置NOTICE文件，源代码在device_hisilicon_third_party_uboot"/>
 			</filefilter>
 
