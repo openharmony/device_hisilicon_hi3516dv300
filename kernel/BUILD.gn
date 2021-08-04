@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import("//build/ohos.gni")
 import("//build/config/clang/clang.gni")
+import("//build/ohos.gni")
 
 kernel_build_script_dir = "//kernel/linux/patches"
 kernel_source_dir = "//kernel/linux-4.19"
@@ -37,23 +37,29 @@ kernel_module_file_list = [
 
 action("kernel") {
   script = "build_kernel.sh"
-  sources = [ kernel_source_dir ]
+  sources = [
+    kernel_source_dir,
+  ]
 
-  product_path="vendor/$product_company/$product_name"
-  outputs = [ "$root_build_dir/packages/phone/images/uImage" ]
+  product_path = "vendor/$product_company/$product_name"
+  outputs = [
+    "$root_build_dir/packages/phone/images/uImage",
+  ]
   args = [
     rebase_path(kernel_build_script_dir, root_build_dir),
     rebase_path("$root_out_dir/../KERNEL_OBJ"),
     rebase_path("$root_build_dir/packages/phone/images"),
     device_type,
     rebase_path("$clang_base_path"),
-    product_path
+    product_path,
   ]
 }
 
 action("modules") {
   script = "copy_modules.sh"
-  deps = [ ":kernel" ]
+  deps = [
+    ":kernel",
+  ]
   kernel_module_file_list_out = []
   foreach(file, kernel_module_file_list) {
     kernel_module_file_list_out += [ "$root_out_dir/kernel/modules/$file" ]
@@ -73,10 +79,15 @@ kernel_modules_targets = []
 foreach(km, kernel_modules) {
   _name = get_path_info(km, "file")
   ohos_prebuilt_shared_library(_name) {
-    deps = [ ":modules" ]
+    deps = [
+      ":modules",
+    ]
     source = km
     module_install_dir = "modules"
-    install_images = [ "vendor" , "updater"]
+    install_images = [
+      "vendor",
+      "updater",
+    ]
     part_name = "hisilicon_products"
   }
   kernel_modules_targets += [ ":$_name" ]
