@@ -76,7 +76,7 @@ foreach(km, kernel_modules) {
     deps = [ ":modules" ]
     source = km
     module_install_dir = "modules"
-    install_images = [ "vendor" ]
+    install_images = [ "vendor" , "updater"]
     part_name = "hisilicon_products"
   }
   kernel_modules_targets += [ ":$_name" ]
