@@ -1,7 +1,12 @@
+subsystem functionfs
+    devname uevent_devpath
+    dirname /dev/functionfs
+
 /dev/jpeg                 0666    system     graphics
 /dev/vinput               0660    system     input
 /dev/mmz_userdev          0644    system     audio
 /dev/graphics/fb*         0660    system     graphics
+/dev/functionfs/f_g*      0660    system     functionfs
 /dev/mem                  0660    system     audio
 /dev/video*               0660    system     camera
 /dev/ion                  0666    system     system
