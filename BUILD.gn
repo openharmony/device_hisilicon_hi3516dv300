@@ -5,10 +5,11 @@ import("//build/ohos.gni")
 print("hi3516dv300_group in")
 group("hi3516dv300_group") {
   deps = [
-    "sdk_linux/mpp:sdk_linux_mpp_group",
-    "kernel:kernel",
-    "kernel:all_modules",
     "build:rc_files",
+    "kernel:all_modules",
+    "kernel:kernel",
+    "sdk_linux/mpp:sdk_linux_mpp_group",
+
     #"sdk_linux/osdrv:sdk_linux_osdrv_group"
   ]
 }
