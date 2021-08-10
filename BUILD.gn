@@ -6,6 +6,7 @@ print("hi3516dv300_group in")
 group("hi3516dv300_group") {
   deps = [
     "build:rc_files",
+    "build/rootfs:init_configs",
     "kernel:all_modules",
     "kernel:kernel",
     "sdk_linux/mpp:sdk_linux_mpp_group",
