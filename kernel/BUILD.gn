@@ -37,14 +37,10 @@ kernel_module_file_list = [
 
 action("kernel") {
   script = "build_kernel.sh"
-  sources = [
-    kernel_source_dir,
-  ]
+  sources = [ kernel_source_dir ]
 
   product_path = "vendor/$product_company/$product_name"
-  outputs = [
-    "$root_build_dir/packages/phone/images/uImage",
-  ]
+  outputs = [ "$root_build_dir/packages/phone/images/uImage" ]
   args = [
     rebase_path(kernel_build_script_dir, root_build_dir),
     rebase_path("$root_out_dir/../KERNEL_OBJ"),
@@ -57,9 +53,7 @@ action("kernel") {
 
 action("modules") {
   script = "copy_modules.sh"
-  deps = [
-    ":kernel",
-  ]
+  deps = [ ":kernel" ]
   kernel_module_file_list_out = []
   foreach(file, kernel_module_file_list) {
     kernel_module_file_list_out += [ "$root_out_dir/kernel/modules/$file" ]
@@ -79,9 +73,7 @@ kernel_modules_targets = []
 foreach(km, kernel_modules) {
   _name = get_path_info(km, "file")
   ohos_prebuilt_shared_library(_name) {
-    deps = [
-      ":modules",
-    ]
+    deps = [ ":modules" ]
     source = km
     module_install_dir = "modules"
     install_images = [
