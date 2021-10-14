@@ -14,13 +14,13 @@ import("//build/ohos.gni")
 
 ohos_prebuilt_etc("init.Hi3516DV300.cfg") {
   source = "init.Hi3516DV300.cfg"
-  install_images = [ "system" ]
+  install_images = [ "vendor" ]
   part_name = "hisilicon_products"
 }
 
 ohos_prebuilt_etc("init.Hi3516DV300.usb.cfg") {
   source = "init.Hi3516DV300.usb.cfg"
-  install_images = [ "system" ]
+  install_images = [ "vendor" ]
   part_name = "hisilicon_products"
 }
 

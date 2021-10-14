@@ -59,9 +59,15 @@ ohos_copy("Hi3516DV300-emmc.xml") {
   outputs = [ "$root_build_dir/packages/phone/images/Hi3516DV300-emmc.xml" ]
 }
 
+ohos_copy("ohos.its") {
+  sources = [ "ohos.its" ]
+  outputs = [ "$root_build_dir/packages/phone/images/ohos.its" ]
+}
+
 group("rc_files") {
   deps = [
     ":Hi3516DV300-emmc.xml",
+    ":ohos.its",
     ":u-boot-hi3516dv300_emmc.bin",
     ":fstab.Hi3516DV300",
     ":init.Hi3516DV300.rc",
