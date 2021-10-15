@@ -56,9 +56,9 @@ ohos_copy("u-boot-hi3516dv300_emmc.bin") {
 
 ohos_copy("Hi3516DV300-emmc.xml") {
   if (disable_init_two_stages) {
-    sources = [ "without-two-stages-Hi3516DV300-emmc.xml" ]
+    sources = [ "Hi3516DV300-emmc-uImage.xml" ]
   } else {
-    sources = [ "Hi3516DV300-emmc.xml" ]
+    sources = [ "Hi3516DV300-emmc-bootImage.xml" ]
   }
   outputs = [ "$root_build_dir/packages/phone/images/Hi3516DV300-emmc.xml" ]
 }
