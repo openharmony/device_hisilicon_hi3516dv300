@@ -67,11 +67,11 @@ ohos_copy("ohos.its") {
 group("rc_files") {
   deps = [
     ":Hi3516DV300-emmc.xml",
-    ":ohos.its",
-    ":u-boot-hi3516dv300_emmc.bin",
     ":fstab.Hi3516DV300",
     ":init.Hi3516DV300.rc",
     ":init.Hi3516DV300.usb.rc",
+    ":ohos.its",
+    ":u-boot-hi3516dv300_emmc.bin",
     ":ueventd.rc",
     ":vb_config_user.ini",
   ]

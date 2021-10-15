@@ -2,7 +2,7 @@
 
 import("//build/ohos.gni")
 
-if(use_musl) {
+if (use_musl) {
   GPL_SDK_LIB_DIR = "//device/hisilicon/hispark_taurus/sdk_linux/soc/lib_lite"
 } else {
   GPL_SDK_LIB_DIR = "//device/hisilicon/hispark_taurus/sdk_linux/soc/lib"
