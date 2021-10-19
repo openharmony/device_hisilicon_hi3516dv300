@@ -55,17 +55,27 @@ ohos_copy("u-boot-hi3516dv300_emmc.bin") {
 }
 
 ohos_copy("Hi3516DV300-emmc.xml") {
-  sources = [ "Hi3516DV300-emmc.xml" ]
+  if (disable_init_two_stages) {
+    sources = [ "Hi3516DV300-emmc-uImage.xml" ]
+  } else {
+    sources = [ "Hi3516DV300-emmc-bootImage.xml" ]
+  }
   outputs = [ "$root_build_dir/packages/phone/images/Hi3516DV300-emmc.xml" ]
+}
+
+ohos_copy("ohos.its") {
+  sources = [ "ohos.its" ]
+  outputs = [ "$root_build_dir/packages/phone/images/ohos.its" ]
 }
 
 group("rc_files") {
   deps = [
     ":Hi3516DV300-emmc.xml",
-    ":u-boot-hi3516dv300_emmc.bin",
     ":fstab.Hi3516DV300",
     ":init.Hi3516DV300.rc",
     ":init.Hi3516DV300.usb.rc",
+    ":ohos.its",
+    ":u-boot-hi3516dv300_emmc.bin",
     ":ueventd.rc",
     ":vb_config_user.ini",
   ]
