@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="GB2312" ?>
 <Partition_Info>
 <Part Sel="1" PartitionName="fastboot" FlashType="emmc" FileSystem="none" Start="0" Length="500K" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\u-boot-hi3516dv300_emmc.bin"/>
-<Part Sel="1" PartitionName="boot" FlashType="emmc" FileSystem="none" Start="1M" Length="15M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\uImage"/>
+<Part Sel="1" PartitionName="boot" FlashType="emmc" FileSystem="none" Start="1M" Length="15M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\boot.img"/>
 <Part Sel="1" PartitionName="updater" FlashType="emmc" FileSystem="ext3/4" Start="16M" Length="20M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\updater.img"/>
-<Part Sel="0" PartitionName="misc" FlashType="emmc" FileSystem="none" Start="36M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="misc" FlashType="emmc" FileSystem="none" Start="36M" Length="1M" SelectFile=""/>
 <Part Sel="1" PartitionName="system" FlashType="emmc" FileSystem="ext3/4" Start="37M" Length="3307M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\system.img"/>
 <Part Sel="1" PartitionName="vendor" FlashType="emmc" FileSystem="ext3/4" Start="3344M" Length="256M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\vendor.img"/>
 <Part Sel="1" PartitionName="userdata" FlashType="emmc" FileSystem="ext3/4" Start="3600M" Length="1464M" SelectFile="Y:\Disk\code\Camera\out\target\product\Hi3559A\userdata.img"/>
