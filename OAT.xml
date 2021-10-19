@@ -72,6 +72,7 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filename" name="Hi3516DV300-emmc.xml" desc="tool烧写分区，不能加其他注释"/>
 				<filteritem type="filename" name="updater_specified_config.xml" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filename" name="NOTICE" desc="ThirdPartyNotice"/>
+				<filteritem type="filename" name="logo.rgb" desc="Display image file"/>
 				<filteritem type="filepath" name="build/updater_config/.*" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="build/vendor/etc/.*" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="updater/.*" desc="配置文件，不能加其他注释"/>
@@ -88,7 +89,6 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filename" name="README"/>
 				<filteritem type="filename" name="BUILD.gn" desc="HiSilicon copyright"/>
 				<filteritem type="filename" name="u-boot-hi3516dv300_emmc.bin" desc="Third-party generated"/>
-				<filteritem type="filename" name="logo.rgb" desc="Display image file"/>
 			</filefilter>
 			<filefilter name="licenseFileNamePolicyFilter" desc="Filters for LICENSE file policies" >
 			</filefilter>
