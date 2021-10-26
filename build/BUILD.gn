@@ -70,8 +70,7 @@ ohos_copy("Hi3516DV300-emmc.xml") {
   outputs = [ "$root_build_dir/packages/phone/images/Hi3516DV300-emmc.xml" ]
 }
 
-
-if (enable_ramdisk){
+if (enable_ramdisk) {
   ohos_copy("ohos.its") {
     sources = [ "ohos.its" ]
     outputs = [ "$root_build_dir/packages/phone/images/ohos.its" ]
@@ -93,10 +92,10 @@ group("rc_files") {
     ":ueventd.rc",
     ":vb_config_user.ini",
   ]
-  if (enable_ramdisk){
+  if (enable_ramdisk) {
     deps += [
-      ":ohos.its",
       ":fstab.required",
+      ":ohos.its",
     ]
   }
 }
