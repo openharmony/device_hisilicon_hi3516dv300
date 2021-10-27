@@ -73,11 +73,11 @@ ohos_copy("Hi3516DV300-emmc.xml") {
 if (enable_ramdisk) {
   ohos_copy("ohos.its") {
     sources = [ "ohos.its" ]
-    outputs = [ "$root_build_dir/packages/phone/images/ohos.its" ]
+    outputs = [ "$root_build_dir/ohos.its" ]
   }
   ohos_copy("fstab.required") {
     sources = [ "vendor/etc/fstab.Hi3516DV300" ]
-    outputs = [ "$root_build_dir/packages/phone/images/fstab.required" ]
+    outputs = [ "$root_build_dir/fstab.required" ]
   }
 }
 
