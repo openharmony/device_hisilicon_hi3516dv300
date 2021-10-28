@@ -22,7 +22,7 @@
     images {
         kernel@1 {
             description = "Linux kernel for Hi3516DV300";
-            data = /incbin/("./zImage-dtb");
+            data = /incbin/("./packages/phone/images/zImage-dtb");
             type = "kernel";
             arch = "arm";
             os = "linux";
@@ -51,4 +51,3 @@
         };
     };
 };
- 
