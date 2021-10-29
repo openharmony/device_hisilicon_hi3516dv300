@@ -14,7 +14,7 @@ import("//build/ohos.gni")
 
 ohos_prebuilt_etc("init.Hi3516DV300.cfg") {
   source = "init.Hi3516DV300.cfg"
-  if (disable_init_two_stages) {
+  if (!enable_ramdisk) {
     install_images = [ "system" ]
   } else {
     install_images = [ "vendor" ]
@@ -24,7 +24,7 @@ ohos_prebuilt_etc("init.Hi3516DV300.cfg") {
 
 ohos_prebuilt_etc("init.Hi3516DV300.usb.cfg") {
   source = "init.Hi3516DV300.usb.cfg"
-  if (disable_init_two_stages) {
+  if (!enable_ramdisk) {
     install_images = [ "system" ]
   } else {
     install_images = [ "vendor" ]
