@@ -2,7 +2,7 @@ import("//drivers/peripheral/camera/hal/camera.gni")
 
 if (defined(ohos_lite)) {
   import("//build/lite/config/component/lite_component.gni")
-  import("//drivers/adapter/uhdf2/uhdf.gni")
+  import("//drivers/adapter/uhdf/uhdf.gni")
 
   action("generate_config_source") {
     script = "//build/lite/run_shell_cmd.py"

@@ -32,7 +32,7 @@ config("device_manager_config") {
 
 if (defined(ohos_lite)) {
   import("//build/lite/config/component/lite_component.gni")
-  import("//drivers/adapter/uhdf2/uhdf.gni")
+  import("//drivers/adapter/uhdf/uhdf.gni")
 
   shared_library("camera_device_manager") {
     sources = [
