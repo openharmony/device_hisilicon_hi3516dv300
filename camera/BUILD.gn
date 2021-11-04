@@ -1,53 +1,20 @@
 # Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+
+import("//drivers/framework/tools/hc-gen/hc_gen.gni")
 import("//drivers/peripheral/camera/hal/camera.gni")
 
 if (defined(ohos_lite)) {
   import("//build/lite/config/component/lite_component.gni")
   import("//drivers/adapter/uhdf2/uhdf.gni")
 
-  hcs_file_prefix = "$camera_product_name_path/hdf_config/uhdf/camera"
-
-  #hcb_file_prefix = "$camera_product_name_path/hdf_config/uhdf/camera"
-
-  action("build_camera_host_config") {
-    script = "//build/lite/run_shell_cmd.py"
-    sources =
-        [ rebase_path("$hcs_file_prefix/hdi_impl/camera_host_config.hcs") ]
-    outputs = [ "${root_out_dir}/etc/camera/camera_host_config.hcb" ]
-    args = [
-      rebase_path("//drivers/framework/tools/hc-gen/build/hc-gen"),
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
+  hc_gen("build_config") {
+    hcs_file_prefix = "$camera_product_name_path/hdf_config/uhdf/camera"
+    sources = [
+      "$hcs_file_prefix/driver/mpp_config.hcs",
+      "$hcs_file_prefix/hdi_impl/camera_host_config.hcs",
+      "$hcs_file_prefix/pipeline_core/ipp_algo_config.hcs",
     ]
-    deps = [ "//drivers/adapter/khdf/liteos:build_hc_gen" ]
-  }
-
-  action("build_ipp_algo_config") {
-    script = "//build/lite/run_shell_cmd.py"
-    sources =
-        [ rebase_path("$hcs_file_prefix/pipeline_core/ipp_algo_config.hcs") ]
-    outputs = [ "${root_out_dir}/etc/camera/ipp_algo_config.hcb" ]
-    args = [
-      rebase_path("//drivers/framework/tools/hc-gen/build/hc-gen"),
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
-    ]
-    deps = [ "//drivers/adapter/khdf/liteos:build_hc_gen" ]
-  }
-
-  action("build_mpp_config") {
-    script = "//build/lite/run_shell_cmd.py"
-    sources = [ rebase_path("$hcs_file_prefix/driver/mpp_config.hcs") ]
-    outputs = [ "${root_out_dir}/etc/camera/mpp_config.hcb" ]
-    args = [
-      rebase_path("//drivers/framework/tools/hc-gen/build/hc-gen"),
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
-    ]
-    deps = [ "//drivers/adapter/khdf/liteos:build_hc_gen" ]
+    outputs = [ "$root_out_dir/etc/camera/{{source_name_part}}.hcb" ]
   }
 
   group("hispark_taurus_build") {
@@ -57,22 +24,12 @@ if (defined(ohos_lite)) {
           "touch",
           rebase_path(
               "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"),
-        ],
-        "")
-
-    exec_script(
-        "//build/lite/run_shell_cmd.py",
-        [
-          "touch",
           rebase_path(
               "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"),
-        ],
-        "")
+        ])
 
     deps = [
-      ":build_camera_host_config",
-      ":build_ipp_algo_config",
-      ":build_mpp_config",
+      ":build_config",
       "src/driver_adapter:driver_adapter",
     ]
   }
@@ -80,16 +37,10 @@ if (defined(ohos_lite)) {
   import("//build/ohos.gni")
   import("//drivers/adapter/uhdf2/uhdf.gni")
 
-  action("build_camera_host_config") {
-    script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  hc_gen("build_camera_host_config") {
     sources = [ rebase_path(
             "$camera_product_name_path/hdf_config/uhdf/camera/hdi_impl/camera_host_config.hcs") ]
-    outputs = [ "$target_gen_dir/hdi_impl/camera_host_config.hcb" ]
-    args = [
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
-    ]
+    outputs = [ "$target_gen_dir/hdi_impl/{{source_name_part}}.hcb" ]
   }
 
   ohos_prebuilt_etc("camera_host_config.hcb") {
@@ -101,48 +52,56 @@ if (defined(ohos_lite)) {
     part_name = "hdf"
   }
 
+  hc_gen_c("generate_source") {
+    sources = [
+      "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/config.hcs",
+      "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/params.hcs",
+    ]
+  }
+
+  action("copy_source") {
+    script = "/usr/bin/env"
+    outputs = [ "$target_out_dir/tmp.c" ]  # no use, just for gn complains
+    args = [
+      "cp",
+      "-f",
+    ]
+    args += rebase_path(get_target_outputs(":generate_source"))
+    args += [ rebase_path(
+            "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/") ]
+    deps = [ ":generate_source" ]
+  }
+
   ohos_prebuilt_etc("config.c") {
+    deps = [ ":copy_source" ]
     source =
         "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"
     exec_script(
-        "//drivers/framework/tools/hc-gen/build_hcs.py",
+        "/usr/bin/env",
         [
-          "-o",
+          "touch",
           rebase_path(
               "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"),
-          "-t",
-          rebase_path(
-              "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/config.hcs"),
-        ],
-        "")
+        ])
   }
 
   ohos_prebuilt_etc("params.c") {
+    deps = [ ":copy_source" ]
     source =
         "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"
     exec_script(
-        "//drivers/framework/tools/hc-gen/build_hcs.py",
+        "/usr/bin/env",
         [
-          "-o",
+          "touch",
           rebase_path(
               "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"),
-          "-t",
-          rebase_path(
-              "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/params.hcs"),
-        ],
-        "")
+        ])
   }
 
-  action("build_ipp_algo_config") {
-    script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  hc_gen("build_ipp_algo_config") {
     sources = [ rebase_path(
             "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/ipp_algo_config.hcs") ]
-    outputs = [ "$target_gen_dir/pipeline_core/ipp_algo_config.hcb" ]
-    args = [
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
-    ]
+    outputs = [ "$target_gen_dir/pipeline_core/{{source_name_part}}.hcb" ]
   }
 
   ohos_prebuilt_etc("ipp_algo_config.hcb") {
@@ -154,16 +113,10 @@ if (defined(ohos_lite)) {
     part_name = "hdf"
   }
 
-  action("build_mpp_config_hcs") {
-    script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  hc_gen("build_mpp_config_hcs") {
     sources = [ rebase_path(
             "$camera_product_name_path/hdf_config/uhdf/camera/driver/mpp_config.hcs") ]
-    outputs = [ "$target_gen_dir/driver/mpp_config.hcb" ]
-    args = [
-      "-o",
-      rebase_path(outputs[0]),
-      sources[0],
-    ]
+    outputs = [ "$target_gen_dir/driver/{{source_name_part}}.hcb" ]
   }
 
   ohos_prebuilt_etc("mpp_config.hcb") {
