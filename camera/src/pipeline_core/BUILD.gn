@@ -3,37 +3,26 @@ import("//drivers/peripheral/camera/hal/camera.gni")
 if (defined(ohos_lite)) {
   import("//build/lite/config/component/lite_component.gni")
   import("//drivers/adapter/uhdf/uhdf.gni")
+  import("//drivers/framework/tools/hc-gen/hc_gen.gni")
 
-  action("generate_config_source") {
-    script = "//build/lite/run_shell_cmd.py"
-    sources = [ rebase_path(
-            "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/config.hcs") ]
-    outputs = [ "${root_out_dir}/tmp/config.c" ]
-    args = [
-      rebase_path("//drivers/framework/tools/hc-gen/build/hc-gen"),
-      "-o",
-      rebase_path(
-          "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"),
-      "-t",
-      sources[0],
+  hc_gen_c("generate_source") {
+    sources = [
+      "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/config.hcs",
+      "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/params.hcs",
     ]
-    deps = [ "//drivers/adapter/khdf/liteos:build_hc_gen" ]
   }
 
-  action("generate_param_source") {
+  action("copy_source") {
     script = "//build/lite/run_shell_cmd.py"
-    sources = [ rebase_path(
-            "$camera_product_name_path/hdf_config/uhdf/camera/pipeline_core/params.hcs") ]
-    outputs = [ "${root_out_dir}/tmp/params.c" ]
+    outputs = [ "$target_out_dir/tmp.c" ]  # no use, just for gn complains
     args = [
-      rebase_path("//drivers/framework/tools/hc-gen/build/hc-gen"),
-      "-o",
-      rebase_path(
-          "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"),
-      "-t",
-      sources[0],
+      "cp",
+      "-f",
     ]
-    deps = [ "//drivers/adapter/khdf/liteos:build_hc_gen" ]
+    args += rebase_path(get_target_outputs(":generate_source"))
+    args += [ rebase_path(
+            "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/") ]
+    deps = [ ":generate_source" ]
   }
 
   config("pipe_config") {
@@ -155,8 +144,7 @@ if (defined(ohos_lite)) {
     ]
 
     deps = [
-      ":generate_config_source",
-      ":generate_param_source",
+      ":copy_source",
       "$camera_path/buffer_manager:camera_buffer_manager",
       "$camera_path/device_manager:camera_device_manager",
       "$camera_path/utils/metadata:metadata_lite",
