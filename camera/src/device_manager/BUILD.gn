@@ -70,8 +70,7 @@ if (defined(ohos_lite)) {
     ]
 
     deps = [ "$camera_path/utils/metadata:metadata_lite" ]
-    hispark_taurus_lib_path =
-        "//device/hisilicon/hardware/media/hal/camera/libs/hispark_taurus/"
+    hispark_taurus_lib_path = "//device/hisilicon/hardware/media/hal/camera/hi3516dv300/llvm/ohos/libs/"
 
     outdir = rebase_path("$hispark_taurus_lib_path")
 
@@ -122,8 +121,7 @@ if (defined(ohos_lite)) {
       "//utils/native/base:utils",
     ]
 
-    hispark_taurus_lib_path =
-        "//device/hisilicon/hardware/media/hal/camera/libs/hispark_taurus/"
+    hispark_taurus_lib_path = "//device/hisilicon/hardware/media/hal/camera/hi3516dv300/llvm/linux_standard/libs/"
 
     outdir = rebase_path("$hispark_taurus_lib_path")
     ldflags = [ "-L$outdir" ]
