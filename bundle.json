@@ -1,0 +1,56 @@
+{
+    "name": "@ohos/device_hisilicon_hi3516dv300",
+    "version": "",
+    "description": "Provides the code for building and packaging Hi3516D V300 kernel images.",
+    "homePage": "https://gitee.com/openharmony",
+    "license": "UNLICENSED",
+    "repository": "https://gitee.com/openharmony/device_hisilicon_hi3516dv300",
+    "domain": "os",
+    "language": "",
+    "publishAs": "code-segment",
+    "private": false,
+    "scripts": {},
+    "tags": [
+        "device"
+    ],
+    "keywords": [
+        "device",
+        "hisilicon",
+        "hi3516dv300"
+    ],
+    "envs": [],
+    "dirs": [],
+    "author": {
+        "name": "",
+        "email": "",
+        "url": ""
+    },
+    "contributors": [
+        {
+            "name": "",
+            "email": "",
+            "url": ""
+        }
+    ],
+    "segment": {
+        "destPath": "device/hisilicon/hi3516dv300"
+    },
+    "component": {
+        "name": "device_hisilicon_hi3516dv300",
+        "subsystem": "",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": [],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
